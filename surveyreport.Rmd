@@ -1,0 +1,71 @@
+---
+title: "Report on Survey"
+output: html_notebook
+---
+
+ 
+
+```{r}
+
+library(readr)
+introsurvey <- read_csv("7COM1079introsurvey.csv", col_types = cols())
+df = subset(introsurvey, select = -c(Email,Name) )
+for ( col in 1:ncol(df)){
+  colnames(df)[col] <-  tail(strsplit(colnames(df)[col],split=" ")[[1]],1)
+}
+
+printColumnInfo <- function(clm, lbl){   
+  vals<-na.omit(unlist(clm))
+  message (sprintf("Mean of %s: %f", lbl,mean(vals)))
+  message (sprintf("Table of %s:", lbl))
+  print(table(vals))
+}
+
+doHistogram<-function(clm,lbl)
+{
+  vals<-na.omit(unlist(clm))
+  barplot(table(vals),main=lbl,
+          xlab="Rating",
+          ylab="Number of students")
+}
+
+
+
+
+
+
+
+```
+
+Graphical View of Knowledge of GIT
+
+```{r}
+printColumnInfo(df[,4],"GIT")
+doHistogram(df[,4],"GIT")
+```
+
+Graphical View of Knowledge of Spreadsheets
+
+```{r}
+printColumnInfo(df[,5],"Spreadsheets")
+doHistogram(df[,5],"Spreadsheets")
+```
+Graphical View of Knowledge of Statistics
+```{r}
+printColumnInfo(df[,6],"Statistics")
+doHistogram(df[,6],"Statistics")
+```
+Graphical View of KNowledge of R
+```{r}
+printColumnInfo(df[,7],"R")
+doHistogram(df[,7],"R")
+```
+
+Graphicsal view of knowledge of Kanban
+
+```{r}
+printColumnInfo(df[,8],"Kanban ")
+doHistogram(df[,8],"Kanban")
+
+```
+
